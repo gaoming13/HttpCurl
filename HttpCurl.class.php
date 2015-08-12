@@ -4,11 +4,9 @@
  * 
  *
  * @author      gaoming13 <gaoming13@yeah.net>
- * @link        https://github.com/gaoming13/wechat-php-sdk
+ * @link        https://github.com/gaoming13/HttpCurl
  * @link        http://me.diary8.com/
  */
-
-namespace Gaoming13\WechatPhpSdk\Utils;
 
 class HttpCurl {
 
