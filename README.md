@@ -3,6 +3,14 @@ Curl模拟Http工具类
 
 可实现模拟GET、POST、POST上传文件.
 
+```
+php.ini
+
+;extension=php_curl.dll
+=>
+extension=php_curl.dll
+```
+
 ## How To Use.
 
 ```php
