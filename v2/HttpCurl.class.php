@@ -2,13 +2,13 @@
 /**
  * HttpCurl Curl模拟Http工具类 v2.0
  *
- *
  * @author      gaoming13 <gaoming13@yeah.net>
  * @link        https://github.com/gaoming13/HttpCurl
  * @link        http://me.diary8.com/
  */
 
-class HttpCurl {
+class HttpCurl
+{
     /**
      * 模拟POST与GET请求
      *
@@ -43,10 +43,11 @@ class HttpCurl {
      * - $errno int [错误码]
      * - $error string [错误描述]
      */
-    static public function request($url, $type, $data = false, $timeout = 0) {
+    public static function request($url, $type, $data = false, $timeout = 0)
+    {
         $cl = curl_init();
         // 兼容HTTPS
-        if(stripos($url, 'https://') !== FALSE) {
+        if (stripos($url, 'https://') !== FALSE) {
             curl_setopt($cl, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($cl, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($cl, CURLOPT_SSLVERSION, 1);
@@ -114,7 +115,8 @@ class HttpCurl {
      * - $errno int [错误码]
      * - $error string [错误描述]
      */
-    static public function get($url, $data = false, $timeout = 0) {
+    public static function get($url, $data = false, $timeout = 0)
+    {
         return self::request($url, 'get', $data, $timeout);
     }
 
@@ -147,7 +149,8 @@ class HttpCurl {
      * - $errno int [错误码]
      * - $error string [错误描述]
      */
-    static public function post($url, $data = false, $timeout = 0) {
+    static public function post($url, $data = false, $timeout = 0)
+    {
         return self::request($url, 'post', $data, $timeout);
     }
 }
