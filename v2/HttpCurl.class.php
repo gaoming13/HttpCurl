@@ -18,12 +18,18 @@ class HttpCurl
      *  'user_uid' => 'root',
      *  'user_pwd' => '123456'
      * ));
-
+     *
      * HttpCurl::request('http://example.com/', 'post', '{"name": "peter"}');
      *
      * HttpCurl::request('http://example.com/', 'post', array(
      *  'file1' => '@/data/sky.jpg',
      *  'file2' => '@/data/bird.jpg'
+     * ));
+     *
+     * // windows
+     * HttpCurl::request('http://example.com/', 'post', array(
+     *  'file1' => '@G:\wamp\www\data\1.jpg',
+     *  'file2' => '@G:\wamp\www\data\2.jpg'
      * ));
      *
      * HttpCurl::request('http://example.com/', 'get');
@@ -66,6 +72,16 @@ class HttpCurl
         $type = strtoupper($type);
         if ($type == 'POST') {
             curl_setopt($cl, CURLOPT_POST, true);
+            // convert @ prefixed file names to CurlFile class
+            // since @ prefix is deprecated as of PHP 5.6
+            if (class_exists('\CURLFile')) {
+                foreach ($data as $k => $v) {
+                    if (strpos($v, '@') === 0) {
+                        $v = ltrim($v, '@');
+                        $data[$k] = new \CURLFile($v);
+                    }
+                }
+            }
             curl_setopt($cl, CURLOPT_POSTFIELDS, $data);
         }
         if ($type == 'GET' && is_array($data)) {
