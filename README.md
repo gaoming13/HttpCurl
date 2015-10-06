@@ -34,6 +34,11 @@ HttpCurl::post('http://example.com/', array(
 	'file1'=>'@/data/sky.jpg',
 	'file2'=>'@/data/bird.jpg',
 ));
+// windows
+HttpCurl::request('http://example.com/', 'post', array(
+	'file1' => '@G:\wamp\www\data\1.jpg',
+	'file2' => '@G:\wamp\www\data\2.jpg'
+));
 ```
 
 ### v1
