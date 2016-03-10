@@ -1,0 +1,24 @@
+{
+    "name": "gaoming13/http-curl",
+    "description": "Curl模拟Http工具类",
+    "keywords": [
+        "php curl"
+    ],
+    "license": "MIT",
+    "require": {
+        "php":">=5.3",
+        "ext-mcrypt": "*"
+    },
+    "authors": [
+        {
+            "name": "gaoming13",
+            "email": "gaoming13@yeah.net"
+        }
+    ],
+    "minimum-stability" : "dev",
+    "autoload": {
+        "psr-4": {
+            "Gaoming13\\HttpCurl\\": "./"
+        }
+    }
+}
