@@ -7,6 +7,8 @@
  * @link        http://me.diary8.com/
  */
 
+namespace Gaoming13\HttpCurl;
+
 class HttpCurl
 {
     /**
