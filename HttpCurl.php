@@ -63,7 +63,10 @@ class HttpCurl
         // 设置返回内容做变量存储
         curl_setopt($cl, CURLOPT_RETURNTRANSFER, 1);
         // 设置需要返回Header
-        curl_setopt($cl, CURLOPT_HEADER, 1);
+        curl_setopt($cl, CURLOPT_HEADER, true);
+        curl_setopt($cl, CURLOPT_HTTPHEADER, [
+            'Content-Type:application/json'
+        ]);
         // 设置需要返回Body
         curl_setopt($cl, CURLOPT_NOBODY, 0);
         // 设置超时时间
@@ -76,9 +79,9 @@ class HttpCurl
             curl_setopt($cl, CURLOPT_POST, true);
             // convert @ prefixed file names to CurlFile class
             // since @ prefix is deprecated as of PHP 5.6
-            if (class_exists('\CURLFile')) {
+            if (class_exists('\CURLFile') && is_array($data)) {
                 foreach ($data as $k => $v) {
-                    if (strpos($v, '@') === 0) {
+                    if (is_string($v) && strpos($v, '@') === 0) {
                         $v = ltrim($v, '@');
                         $data[$k] = new \CURLFile($v);
                     }
