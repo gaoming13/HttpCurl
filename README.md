@@ -5,6 +5,10 @@ Curl模拟Http工具类
 
 ## How To Use.
 
+```php
+use Gaoming13\HttpCurl\HttpCurl;
+```
+
 ### v2
 
 ```php
