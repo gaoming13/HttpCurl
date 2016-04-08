@@ -39,9 +39,10 @@ class HttpCurl
      * HttpCurl::request('http://example.com/?a=123', 'get', array('b'=>456));
      * ```
      *
-     * @param string $url [请求的url地址]
-     * @param string $type [请求类型 get & post]
-     * @param mixed $data [可选：传递的参数]
+     * @param string $url [请求地址]
+     * @param string $type [请求方式 post or get]
+     * @param bool|string|array $data [传递的参数]
+     * @param array $header [可选：请求头] eg: ['Content-Type:application/json']
      * @param int $timeout [可选：超时时间]
      *
      * @return array($body, $header, $status, $errno, $error)
@@ -51,31 +52,39 @@ class HttpCurl
      * - $errno int [错误码]
      * - $error string [错误描述]
      */
-    public static function request($url, $type, $data = false, $timeout = 0)
+    public static function request($url, $type, $data = false, $header = [], $timeout = 0)
     {
         $cl = curl_init();
+
         // 兼容HTTPS
         if (stripos($url, 'https://') !== FALSE) {
             curl_setopt($cl, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($cl, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($cl, CURLOPT_SSLVERSION, 1);
         }
+
         // 设置返回内容做变量存储
         curl_setopt($cl, CURLOPT_RETURNTRANSFER, 1);
+
         // 设置需要返回Header
         curl_setopt($cl, CURLOPT_HEADER, true);
-        curl_setopt($cl, CURLOPT_HTTPHEADER, [
-            'Content-Type:application/json'
-        ]);
+
+        // 设置请求头
+        if (count($header) > 0) {
+            curl_setopt($cl, CURLOPT_HTTPHEADER, $header);
+        }
+
         // 设置需要返回Body
         curl_setopt($cl, CURLOPT_NOBODY, 0);
+
         // 设置超时时间
         if ($timeout > 0) {
             curl_setopt($cl, CURLOPT_TIMEOUT, $timeout);
         }
+
         // POST/GET参数处理
         $type = strtoupper($type);
-        if ($type == 'POST') {
+            if ($type == 'POST') {
             curl_setopt($cl, CURLOPT_POST, true);
             // convert @ prefixed file names to CurlFile class
             // since @ prefix is deprecated as of PHP 5.6
@@ -104,6 +113,7 @@ class HttpCurl
         $errno  = curl_errno($cl);
         // 读取错误详情
         $error = curl_error($cl);
+
         // 关闭Curl
         curl_close($cl);
         if ($errno == 0 && isset($status['http_code'])) {
@@ -113,65 +123,5 @@ class HttpCurl
         } else {
             return array('', '', $status, $errno, $error);
         }
-    }
-
-    /**
-     * 模拟GET请求
-     *
-     * Examples:
-     * ```
-     * HttpCurl::get('http://example.com/');
-     *
-     * HttpCurl::get('http://example.com/?a=123', array('b'=>456));
-     * ```
-     *
-     * @param string $url [请求的url地址]
-     * @param mixed $data [可选：传递的参数]
-     * @param int $timeout [可选：超时时间]
-     *
-     * @return array($body, $header, $status, $errno, $error)
-     * - $body string [响应正文]
-     * - $header string [响应头]
-     * - $status array [响应状态]
-     * - $errno int [错误码]
-     * - $error string [错误描述]
-     */
-    public static function get($url, $data = false, $timeout = 0)
-    {
-        return self::request($url, 'get', $data, $timeout);
-    }
-
-    /**
-     * 模拟POST请求
-     *
-     * Examples:
-     * ```
-     * HttpCurl::post('http://example.com/', array(
-     *  'user_uid' => 'root',
-     *  'user_pwd' => '123456'
-     * ));
-
-     * HttpCurl::post('http://example.com/', '{"name": "peter"}');
-     *
-     * HttpCurl::post('http://example.com/', array(
-     *  'file1' => '@/data/sky.jpg',
-     *  'file2' => '@/data/bird.jpg'
-     * ));
-     * ```
-     *
-     * @param string $url [请求的url地址]
-     * @param mixed $data [可选：传递的参数]
-     * @param int $timeout [可选：超时时间]
-     *
-     * @return array($body, $header, $status, $errno, $error)
-     * - $body string [响应正文]
-     * - $header string [响应头]
-     * - $status array [响应状态]
-     * - $errno int [错误码]
-     * - $error string [错误描述]
-     */
-    static public function post($url, $data = false, $timeout = 0)
-    {
-        return self::request($url, 'post', $data, $timeout);
     }
 }
