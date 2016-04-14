@@ -1,48 +1,47 @@
 # HttpCurl.class.php
 Curl模拟Http工具类
 
-可实现模拟GET、POST、POST上传文件.
+可实现模拟GET、POST请求, 支持上传文件/自定义header头
 
 ## How To Use.
+
+使用composer
+```bash
+composer require gaoming13/http-curl
+```
 
 ```php
 use Gaoming13\HttpCurl\HttpCurl;
 ```
 
-### v2
+### v2.2
 
 ```php
-require 'v2/HttpCurl.class.php';
+HttpCurl::request('http://example.com/', 'get');
 
-// GET请求
-list($body, $header, $status, $errno, $error) = HttpCurl::get('http://example.com/');
-
-// GET请求，传参
-HttpCurl::get('http://example.com/?a=123', array(
-	'b' => '56',
-	'c' => '78'
+HttpCurl::request('http://example.com/?a=123', 'get', array(
+	'b' => 456
 ));
 
-// GET请求，设置超时时间
-HttpCurl::get('http://example.com/', false, 20);
-
-// POST请求
-HttpCurl::post('http://example.com/', array(
-	'abc'=>'123', 
-	'efg'=>'567'
-));
-HttpCurl::post('http://example.com/', '这是post原始内容');
-
-// POST请求, 文件上传
-HttpCurl::post('http://example.com/', array(
-	'file1'=>'@/data/sky.jpg',
-	'file2'=>'@/data/bird.jpg',
-));
-// windows
 HttpCurl::request('http://example.com/', 'post', array(
-	'file1' => '@G:\wamp\www\data\1.jpg',
-	'file2' => '@G:\wamp\www\data\2.jpg'
+    'user_uid' => 'root',
+    'user_pwd' => '123456'
 ));
+
+HttpCurl::request('http://example.com/', 'post', array(
+	'file1' => '@/data/sky.jpg',
+	'file2' => '@/data/bird.jpg'
+));
+
+HttpCurl::request('http://example.com/', 'post', array(
+	'file1' => '@G:\wamp\www\data\sky.jpg',
+	'file2' => '@G:\wamp\www\data\bird.jpg'
+));
+
+HttpCurl::request('http://example.com/', 'post', array(
+    'user_uid' => 'root',
+    'user_pwd' => '123456'
+), array('Content-Type:application/json'));
 ```
 
 ### v1
