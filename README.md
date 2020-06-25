@@ -1,7 +1,12 @@
 # HttpCurl.class.php
+
+[![Latest Stable Version](https://poser.pugx.org/gaoming13/http-curl/v/stable.svg)](https://packagist.org/packages/gaoming13/http-curl)
+[![Total Downloads](https://poser.pugx.org/gaoming13/http-curl/downloads)](https://packagist.org/packages/gaoming13/http-curl)
+
 Curl模拟Http工具类
 
-可实现模拟GET、POST请求, 支持上传文件/自定义header头
+* 可实现模拟GET、POST请求, 支持上传文件/自定义header头
+* 支持 5.3+
 
 ## How To Use.
 
@@ -55,7 +60,7 @@ $body 响应正文
 <html>
 <head>
     <title>Example Domain</title>
-	...	
+	...
 ```
 
 $header 响应头
@@ -101,7 +106,7 @@ $status 该次请求的状态
 'redirect_time' => float 0
 'redirect_url' => string '' (length=0)
 'primary_ip' => string '93.184.216.34' (length=13)
-'certinfo' => 
+'certinfo' =>
 array (size=0)
   empty
 'primary_port' => int 80
@@ -133,7 +138,7 @@ HttpCurl::get('http://api.example.com/?a=123&b=456', 'json');
 
 // POST请求
 HttpCurl::post('http://api.example.com/?a=123', array(
-	'abc'=>'123', 
+	'abc'=>'123',
 	'efg'=>'567'
 ));
 HttpCurl::post('http://api.example.com/', '这是post原始内容', 'json');

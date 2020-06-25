@@ -1,7 +1,7 @@
 <?php
 /**
  * HttpCurl Curl模拟Http工具类
- * 
+ *
  *
  * @author      gaoming13 <gaoming13@yeah.net>
  * @link        https://github.com/gaoming13/HttpCurl
@@ -14,14 +14,14 @@ class HttpCurl {
      * 模拟GET请求
      *
      * @param string $url
-     * @param string $data_type     
+     * @param string $data_type
      *
      * @return mixed
-     * 
+     *
      * Examples:
-     * ```   
+     * ```
      * HttpCurl::get('http://api.example.com/?a=123&b=456', 'json');
-     * ```               
+     * ```
      */
     static public function get($url, $data_type='text') {
         $cl = curl_init();
@@ -42,7 +42,7 @@ class HttpCurl {
             return $content;
         } else {
             return FALSE;
-        }        
+        }
     }
 
     /**
@@ -53,14 +53,14 @@ class HttpCurl {
      * @param string $data_type
      *
      * @return mixed
-     * 
+     *
      * Examples:
-     * ```   
+     * ```
      * HttpCurl::post('http://api.example.com/?a=123', array('abc'=>'123', 'efg'=>'567'), 'json');
      * HttpCurl::post('http://api.example.com/', '这是post原始内容', 'json');
      * 文件post上传
      * HttpCurl::post('http://api.example.com/', array('abc'=>'123', 'file1'=>'@/data/1.jpg'), 'json');
-     * ```               
+     * ```
      */
     static public function post($url, $fields, $data_type='text') {
         $cl = curl_init();
